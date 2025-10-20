@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Animated Progress Bar</title>
+<style>
+  #myProgress {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+  }
+
+  #myBar {
+    width: 10%; /* Initial width */
+    height: 30px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    transition: width 0.5s ease-in-out; /* Smooth transition for width changes */
+  }
+</style>
+</head>
+<body style="font-family: sans-serif;">
+
+<h1 id="head"></h1>
+<div id="myProgress">
+  <div id="myBar"></div>
+</div>
+<p id="status">Sending request to Admin...</p>
+<script type="module">
+  import { faker } from 'https://cdn.jsdelivr.net/npm/@faker-js/faker/+esm';
+  
+  document.querySelector("#head").innerHTML = "Hacking " + faker.company.name()
+</script>
+<script>
+function generateRandomPassword(length = 12) {
+  const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+  const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numberChars = "0123456789";
+  const symbolChars = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+
+  // Combine all desired character sets
+  const allChars = lowercaseChars + uppercaseChars + numberChars + symbolChars;
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * allChars.length);
+    password += allChars[randomIndex];
+  }
+  return password;
+}
+
+
+  // Get a reference to the progress bar element
+  const myBar = document.getElementById('myBar');
+  stage = 0
+
+  // Start with the initial width (as a number)
+  let currentWidth = 10;
+  const incrementAmount = 5; // How much to increase the bar with each keypress
+
+  // Add an event listener to the entire window for the 'keydown' event
+  window.addEventListener('keydown', (event) => {
+    // Check if the current progress is less than 100% before increasing
+    if (currentWidth < 100) {
+      // Increase the width by the increment amount
+      currentWidth += incrementAmount;
+      
+      // Ensure the width doesn't go over 100%
+      if (currentWidth > 100 || currentWidth == 100 && stage==0) {
+	document.querySelector("#head").innerHTML = "Overriding Admin..."
+	document.querySelector("#status").innerHTML = "Sending request to Admin...<br>SUCCESS<br>Extracting and Cracking Hash..."
+	currentWidth = 0
+	stage = 1
+      }
+
+      if (currentWidth > 100 || currentWidth == 100 && stage==1) {
+	document.querySelector("#head").innerHTML = "Cracking Hash..."
+	currentWidth = 0
+	stage = 2
+	document.querySelector("#status").innerHTML = "Sending request to Admin...<br>SUCCESS<br>Extracting and Cracking Hash...<br>SUCCESS<br>Deleting Logs..."
+
+      }
+
+      if (currentWidth > 100 || currentWidth == 100 && stage==2) {
+	document.querySelector("#head").innerHTML = "Finalizing..."
+	document.querySelector("#status").innerHTML = "Sending request to Admin...<br>SUCCESS<br>Extracting and Cracking Hash...<br>SUCCESS<br>Deleting Logs...<br>SUCCESS<br>Cleaning up..."
+
+	currentWidth = 0
+	stage = 3
+      }
+      if (currentWidth > 100 || currentWidth == 100 && stage==3) {
+	document.querySelector("#head").innerHTML = "Complete."
+	currentWidth = 0
+	myProgress.innerHTML = "<b>Username: </b>Admin<br><b>Password: </b>" + generateRandomPassword();
+	document.querySelector("#status").innerHTML = "Sending request to Admin...<br>SUCCESS<br>Extracting and Cracking Hash...<br>SUCCESS<br>Deleting Logs...<br>SUCCESS<br>Cleaning up...<br>SUCCESS<br>Found Password!"
+
+	myProgress.id = ""
+
+	stage = 3
+      }
+
+      // Update the progress bar's width style. The CSS transition handles the "slow" effect.
+      myBar.style.width = currentWidth + '%';
+    }
+  });
+</script>
+
+</body>
+</html>
