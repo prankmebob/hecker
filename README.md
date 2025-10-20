@@ -1,2 +1,2 @@
 # Fake Hecker
-[Hecked](https://img.shields.io/badge/Hacker-Faked)
+![Static Badge](https://img.shields.io/badge/Be_A_Fake-Hacker-Blue)
